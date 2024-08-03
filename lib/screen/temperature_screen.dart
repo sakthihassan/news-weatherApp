@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_news_app/provider/weather_provider.dart';
+import 'package:weather_news_app/screen/weather_screen.dart';
 
 class TemperatureScreen extends ConsumerStatefulWidget {
   const TemperatureScreen({Key? key}) : super(key: key);
@@ -32,17 +33,11 @@ class _TemperatureScreenState extends ConsumerState<TemperatureScreen> {
                 RadioListTile<String>(
                   title: const Text('Celsius'),
                   value: 'Celsius',
-                  groupValue:weatherState.temperature,
+                  groupValue: weatherState.temperature,
                   onChanged: (String? value) {
                     setState(() {
                       weatherState.temperature = value.toString();
                       weatherState.celsius = true;
-                      ref.read(weatherProvider).currentWeatherData();
-                      ref.read(weatherProvider).countryWeatherData();
-                      ref.read(weatherProvider).countryLocForeCast();
-                      ref.read(weatherProvider).currentLocForeCast();
-
-
                     });
                   },
                 ),
@@ -54,16 +49,27 @@ class _TemperatureScreenState extends ConsumerState<TemperatureScreen> {
                     setState(() {
                       weatherState.temperature = value.toString();
                       weatherState.celsius = false;
-                      ref.read(weatherProvider).currentWeatherData();
-                      ref.read(weatherProvider).countryWeatherData();
-                      ref.read(weatherProvider).countryLocForeCast();
-                      ref.read(weatherProvider).currentLocForeCast();
-
                     });
                   },
                 ),
-
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                if(searchCountry.text.isEmpty){
+                 ref.read(weatherProvider).getUserLocation();
+                 ref.read(weatherProvider).currentWeatherData();}
+                else{
+                  ref.read(weatherProvider).countryWeatherData();
+                }
+
+              },
+              child: Text("Save"),
             ),
           ),
         ],

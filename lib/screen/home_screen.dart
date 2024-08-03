@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     margin: EdgeInsets.only(right: 10),
                     child: Row(
                       children: [
-                        InkWell(child: Icon(Icons.filter_list),onTap: (){},),
+
                         SizedBox(width: 15),
                         InkWell(child: Icon(Icons.settings),onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(),));

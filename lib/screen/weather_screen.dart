@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_news_app/model/forecast_model.dart';
 import 'package:weather_news_app/provider/weather_provider.dart';
-
+TextEditingController searchCountry = TextEditingController();
 class WeatherScreen extends ConsumerStatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
 
@@ -14,7 +14,7 @@ class WeatherScreen extends ConsumerStatefulWidget {
 class _WeatherScreenState extends ConsumerState<WeatherScreen> {
   String formattedDate = DateFormat('EEEE, d MMMM yyyy').format(DateTime.now());
   String formattedTime = DateFormat('hh:mm a').format(DateTime.now());
-  TextEditingController searchCountry = TextEditingController();
+
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
 
   void updateDateTime(int timezoneOffset) {
     DateTime now =
-    DateTime.now().toUtc().add(Duration(seconds: timezoneOffset));
+        DateTime.now().toUtc().add(Duration(seconds: timezoneOffset));
     setState(() {
       formattedDate = DateFormat('EEEE, d MMMM yyyy').format(now);
       formattedTime = DateFormat('hh:mm a').format(now);
@@ -208,7 +208,7 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -257,15 +257,15 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: forecast.weather!.first.main == "Rain"
                                       ? Image.asset(
-                                    'images/rainy.jpeg',
-                                    height: 50,
-                                    width: 50,
-                                  )
+                                          'images/rainy.jpeg',
+                                          height: 50,
+                                          width: 50,
+                                        )
                                       : Image.asset(
-                                    'images/cloudy.png',
-                                    height: 50,
-                                    width: 50,
-                                  ),
+                                          'images/cloudy.png',
+                                          height: 50,
+                                          width: 50,
+                                        ),
                                 ),
                               ),
                             ],
@@ -326,13 +326,14 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 ),
                 onChanged: (text) {
                   if (text.isEmpty) {
                     ref.read(weatherProvider).getUserLocation();
                     ref.read(weatherProvider).currentWeatherData();
                     ref.read(weatherProvider).currentLocForeCast();
+                    weatherProviderState.countryName='';
                   }
                 },
               ),
@@ -341,5 +342,9 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
         ],
       ),
     );
+  }
+
+  void dispose() {
+    super.dispose();
   }
 }

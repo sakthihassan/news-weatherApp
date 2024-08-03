@@ -15,7 +15,7 @@ class WeatherProvider extends ChangeNotifier {
   String? countryName;
   bool celsius = true;
   var temperature = 'Celsius';
-
+  var changedData = '';
   Future<void> getUserLocation() async {
     var position = await GeolocatorPlatform.instance
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -55,7 +55,7 @@ class WeatherProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await dio.get(
-        "https://api.openweathermap.org/data/2.5/forecast?lat=${currentPostion?.latitude}&lon=${currentPostion?.longitude}&ctn=${2}&appid=d17e2066b915b9332e576ca547bbd04c",
+        "https://api.openweathermap.org/data/2.5/forecast?lat=${currentPostion?.latitude}&lon=${currentPostion?.longitude}&appid=d17e2066b915b9332e576ca547bbd04c",
       );
 
       if (response.statusCode == 200) {
@@ -127,6 +127,8 @@ class WeatherProvider extends ChangeNotifier {
   }
 
 }
+
+
 
 final weatherProvider =
     ChangeNotifierProvider<WeatherProvider>((ref) => WeatherProvider());

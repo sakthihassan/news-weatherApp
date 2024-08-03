@@ -14,22 +14,19 @@ class NewsScreen extends ConsumerStatefulWidget {
 }
 
 class _NewsScreenState extends ConsumerState<NewsScreen> {
-  bool filtering =  true;
+  bool filtering = true;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       ref.read(newsProvider.notifier).fetchHeadlines();
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final newsState = ref.watch(newsProvider);
-
 
     return Container(
       padding: const EdgeInsets.all(10.0),
@@ -55,18 +52,58 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
               ),
               Spacer(),
               InkWell(
+                child: Icon(Icons.filter_list),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        title: Text(
+                          'Current Weather News',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+              Spacer(),
+              InkWell(
                 onTap: () async {
-                 final countrycode = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CountryScreen(),
-                      ));
-                 if(countrycode.toString().isNotEmpty){
-                   setState(() {
-                     newsState.countryName = countrycode;
-                     ref.read(newsProvider).fetchHeadlines();
-                   });
-                 }
+                  final countrycode = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CountryScreen(),
+                    ),
+                  );
+                  if (countrycode.toString().isNotEmpty) {
+                    setState(() {
+                      newsState.countryName = countrycode;
+                      ref.read(newsProvider).fetchHeadlines();
+                    });
+                  }
                 },
                 child: Container(
                     margin: EdgeInsets.only(right: 20),
@@ -90,7 +127,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
           Expanded(
             child: ListView.builder(
               itemCount:
-                  newsState.article == null ? 1 : newsState.article!.length,
+              newsState.article == null ? 1 : newsState.article!.length,
               itemBuilder: (context, index) {
                 if (newsState.article == null) {
                   return Center(child: CircularProgressIndicator());
@@ -103,8 +140,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                           .launchUrlLink(article.url.toString());
                     },
                     child: Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                      margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -129,7 +165,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                article!.urlToImage.toString() ,
+                                article!.urlToImage.toString(),
                                 fit: BoxFit.fill,
                                 width: double.infinity,
                                 errorBuilder: (BuildContext context,
@@ -163,7 +199,6 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                             alignment: Alignment.topRight,
                             child: Text(
                               '- ${article.publishedAt}',
-
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey[600],
