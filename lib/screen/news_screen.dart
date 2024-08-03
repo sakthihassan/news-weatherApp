@@ -14,19 +14,29 @@ class NewsScreen extends ConsumerStatefulWidget {
 }
 
 class _NewsScreenState extends ConsumerState<NewsScreen> {
-  bool filtering = true;
+  bool filtering = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(newsProvider.notifier).fetchHeadlines();
+      ref.read(weatherProvider.notifier).currentWeatherData();
+    });
+  }
+
+  void applyWeatherBasedFilter(String weatherCondition) {
+    final filteredHeadlines =
+        ref.read(newsProvider.notifier).filterHeadlines(weatherCondition);
+    setState(() {
+      ref.read(newsProvider.notifier).updateArticles(filteredHeadlines);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final newsState = ref.watch(newsProvider);
+    final weatherCondition = ref.watch(weatherProvider).getWeatherCondition();
 
     return Container(
       padding: const EdgeInsets.all(10.0),
@@ -51,44 +61,56 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                 ),
               ),
               Spacer(),
-              InkWell(
-                child: Icon(Icons.filter_list),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        title: Text(
-                          'Current Weather News',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+              filtering == false
+                  ? InkWell(
+                      child: Icon(Icons.filter_alt),
+                      onTap: () {
+                        filtering = true;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              title: Text(
+                                'Current Weather News',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    filtering = false;
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    if (filtering) {
+                                      applyWeatherBasedFilter(weatherCondition);
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    )
+                  : InkWell(
+                      child: Icon(Icons.filter_alt_off),
+                      onTap: () {
+                        filtering = false;
+                        ref.read(newsProvider).fetchHeadlines();
+                      },
+                    ),
               Spacer(),
               InkWell(
                 onTap: () async {
@@ -127,7 +149,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
           Expanded(
             child: ListView.builder(
               itemCount:
-              newsState.article == null ? 1 : newsState.article!.length,
+                  newsState.article == null ? 1 : newsState.article!.length,
               itemBuilder: (context, index) {
                 if (newsState.article == null) {
                   return Center(child: CircularProgressIndicator());
@@ -140,7 +162,8 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                           .launchUrlLink(article.url.toString());
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white,

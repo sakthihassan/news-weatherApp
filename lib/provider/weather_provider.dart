@@ -93,6 +93,17 @@ class WeatherProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getWeatherCondition() {
+    if (weatherData == null) return 'unknown';
+
+    double tempKelvin = weatherData!.main.temp ?? 0.0;
+    double tempCelsius = double.parse(kelvinToCelsius(tempKelvin));
+
+    if (tempCelsius < 10) return 'cold';
+    if (tempCelsius > 25) return 'hot';
+    return 'cool';
+  }
+
 
 
   Future<void> countryWeatherData() async {
