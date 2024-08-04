@@ -93,6 +93,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                                   onPressed: () {
                                     if (filtering) {
                                       applyWeatherBasedFilter(weatherCondition);
+                                      ref.read(newsProvider).fetchHeadlines();
                                       Navigator.of(context).pop();
                                     }
                                   },
@@ -108,6 +109,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                       child: Icon(Icons.filter_alt_off),
                       onTap: () {
                         filtering = false;
+                        newsState.filterArticles='';
                         ref.read(newsProvider).fetchHeadlines();
                       },
                     ),

@@ -13,11 +13,12 @@ class NewsProvider extends ChangeNotifier {
   var countryName = "in";
   var categoryName = 'general';
   bool filterNews = false;
+  var filterArticles = '';
 
   Future<void> fetchHeadlines() async {
     try {
       final response = await dio.get(
-        "https://newsapi.org/v2/top-headlines?country=$countryName&category=$categoryName&apiKey=ff2a5193d4ff4e4d875e6fd4f2c21c60",
+        "https://newsapi.org/v2/top-headlines?q=$filterArticles&country=$countryName&category=$categoryName&apiKey=ff2a5193d4ff4e4d875e6fd4f2c21c60",
       );
 
       if (response.statusCode == 200) {
@@ -50,26 +51,22 @@ class NewsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Articles> filterHeadlines(String weatherCondition) {
-    List<Articles> filteredArticles = [];
+   filterHeadlines(String weatherCondition) {
     switch (weatherCondition) {
       case 'cold':
-        filteredArticles = article?.where((a) => a.title?.contains('depressing') ?? false).toList() ?? [];
+        filterArticles = 'depressing';
         break;
       case 'hot':
-        filteredArticles = article?.where((a) => a.title?.contains('fear') ?? false).toList() ?? [];
+        filterArticles = 'fear';
         break;
       case 'cool':
-        filteredArticles = article?.where((a) => a.title?.contains('winning') ?? false || a.title!.contains('happiness') ?? false).toList() ?? [];
-        break;
-      default:
-        filteredArticles = article ?? [];
+        filterArticles = 'winning';
         break;
     }
-    return filteredArticles;
+    print( '12345 ${filterArticles}');
   }
 
-  void updateArticles(List<Articles> articles) {
+  void updateArticles(articles) {
     this.article = articles;
     notifyListeners();
   }
