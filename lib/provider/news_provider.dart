@@ -57,7 +57,7 @@ class NewsProvider extends ChangeNotifier {
         filteredArticles = article?.where((a) => a.title?.contains('depressing') ?? false).toList() ?? [];
         break;
       case 'hot':
-        filteredArticles = article?.where((a) => a.description?.contains('fear') ?? false).toList() ?? [];
+        filteredArticles = article?.where((a) => a.title?.contains('fear') ?? false).toList() ?? [];
         break;
       case 'cool':
         filteredArticles = article?.where((a) => a.title?.contains('winning') ?? false || a.title!.contains('happiness') ?? false).toList() ?? [];
