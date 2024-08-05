@@ -61,13 +61,12 @@ class _TemperatureScreenState extends ConsumerState<TemperatureScreen> {
               onPressed: () async {
                 Navigator.pop(context);
                 Navigator.pop(context);
-                if(searchCountry.text.isEmpty){
-                 ref.read(weatherProvider).getUserLocation();
-                 ref.read(weatherProvider).currentWeatherData();}
-                else{
+                if (searchCountry.text.isEmpty) {
+                  ref.read(weatherProvider).getUserLocation();
+                  ref.read(weatherProvider).currentWeatherData();
+                } else {
                   ref.read(weatherProvider).countryWeatherData();
                 }
-
               },
               child: Text("Save"),
             ),

@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_news_app/model/forecast_model.dart';
 import 'package:weather_news_app/provider/weather_provider.dart';
+
 TextEditingController searchCountry = TextEditingController();
+
 class WeatherScreen extends ConsumerStatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
 
@@ -14,7 +16,6 @@ class WeatherScreen extends ConsumerStatefulWidget {
 class _WeatherScreenState extends ConsumerState<WeatherScreen> {
   String formattedDate = DateFormat('EEEE, d MMMM yyyy').format(DateTime.now());
   String formattedTime = DateFormat('hh:mm a').format(DateTime.now());
-
 
   @override
   void initState() {
@@ -80,7 +81,8 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
         }
       }
 
-      dailyForecasts = dailyMap.values.toList().take(5).toList();
+      dailyForecasts = dailyMap.values.toList();
+      print("DailyForCasts : ${dailyForecasts}");
     }
 
     return Scaffold(
@@ -333,7 +335,7 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
                     ref.read(weatherProvider).getUserLocation();
                     ref.read(weatherProvider).currentWeatherData();
                     ref.read(weatherProvider).currentLocForeCast();
-                    weatherProviderState.countryName='';
+                    weatherProviderState.countryName = '';
                   }
                 },
               ),

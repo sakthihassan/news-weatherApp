@@ -34,7 +34,6 @@ class NewsProvider extends ChangeNotifier {
     }
   }
 
-
   Future<void> launchUrlLink(String url) async {
     _isLoading = true;
 
@@ -51,7 +50,7 @@ class NewsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-   filterHeadlines(String weatherCondition) {
+  filterHeadlines(String weatherCondition) {
     switch (weatherCondition) {
       case 'cold':
         filterArticles = 'depressing';
@@ -63,7 +62,7 @@ class NewsProvider extends ChangeNotifier {
         filterArticles = 'winning';
         break;
     }
-    print( '12345 ${filterArticles}');
+    print('12345 ${filterArticles}');
   }
 
   void updateArticles(articles) {
@@ -72,4 +71,5 @@ class NewsProvider extends ChangeNotifier {
   }
 }
 
-final newsProvider = ChangeNotifierProvider<NewsProvider>((ref) => NewsProvider());
+final newsProvider =
+    ChangeNotifierProvider<NewsProvider>((ref) => NewsProvider());

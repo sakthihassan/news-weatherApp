@@ -109,7 +109,7 @@ class _NewsScreenState extends ConsumerState<NewsScreen> {
                       child: Icon(Icons.filter_alt_off),
                       onTap: () {
                         filtering = false;
-                        newsState.filterArticles='';
+                        newsState.filterArticles = '';
                         ref.read(newsProvider).fetchHeadlines();
                       },
                     ),

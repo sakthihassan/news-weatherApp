@@ -9,13 +9,13 @@ import 'package:weather_news_app/model/weather_model.dart';
 class WeatherProvider extends ChangeNotifier {
   final dio = Dio();
   WeatherData? weatherData;
-  List<ForecastList> forecast=[];
+  List<ForecastList> forecast = [];
   LatLng? currentPostion;
   bool isLoading = false;
   String? countryName;
   bool celsius = true;
   var temperature = 'Celsius';
-  var changedData = '';
+
   Future<void> getUserLocation() async {
     var position = await GeolocatorPlatform.instance
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -71,6 +71,7 @@ class WeatherProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
   Future<void> countryLocForeCast() async {
     isLoading = true;
     notifyListeners();
@@ -104,8 +105,6 @@ class WeatherProvider extends ChangeNotifier {
     return 'cool';
   }
 
-
-
   Future<void> countryWeatherData() async {
     isLoading = true;
     notifyListeners();
@@ -136,10 +135,7 @@ class WeatherProvider extends ChangeNotifier {
     double tempFahrenheit = (tempKelvin - 273.15) * 9 / 5 + 32;
     return tempFahrenheit.toStringAsFixed(2);
   }
-
 }
-
-
 
 final weatherProvider =
     ChangeNotifierProvider<WeatherProvider>((ref) => WeatherProvider());

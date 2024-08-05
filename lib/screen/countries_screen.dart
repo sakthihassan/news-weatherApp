@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_news_app/screen/countries.dart';
 
-
 class CountryScreen extends ConsumerStatefulWidget {
   const CountryScreen({Key? key}) : super(key: key);
 

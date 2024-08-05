@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_news_app/screen/newsCateogry_screen.dart';
 import 'package:weather_news_app/screen/temperature_screen.dart';
 
-
 class SettingScreen extends ConsumerStatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -26,7 +25,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
       appBar: AppBar(
         title: Text("Settings"),
         centerTitle: true,
-         // AppBar color
+        // AppBar color
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,7 +40,8 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
               },
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 12.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8.0),
@@ -67,12 +67,15 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                         ),
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 16.0, color: Colors.grey),
+                    Icon(Icons.arrow_forward_ios,
+                        size: 16.0, color: Colors.grey),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -82,7 +85,8 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
               },
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 12.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8.0),
@@ -108,7 +112,8 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                         ),
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 16.0, color: Colors.grey),
+                    Icon(Icons.arrow_forward_ios,
+                        size: 16.0, color: Colors.grey),
                   ],
                 ),
               ),

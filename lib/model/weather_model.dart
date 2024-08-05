@@ -27,7 +27,8 @@ class WeatherData {
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
     var weatherList = json['weather'] as List? ?? [];
-    List<Weather> weatherItems = weatherList.map((i) => Weather.fromJson(i)).toList();
+    List<Weather> weatherItems =
+        weatherList.map((i) => Weather.fromJson(i)).toList();
 
     return WeatherData(
       coord: Coord.fromJson(json['coord']),

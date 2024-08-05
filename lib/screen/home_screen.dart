@@ -17,6 +17,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _showNewsScreen = true;
+
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -28,7 +29,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
@@ -45,17 +45,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       Text(
                         "News",
-                        style: TextStyle(fontSize: 30, color: Color(0xFF009087)),
+                        style:
+                            TextStyle(fontSize: 30, color: Color(0xFF009087)),
                       ),
                       SizedBox(width: 5),
                       Text(
                         "&",
-                        style: TextStyle(fontSize: 30, color: Colors.grey.shade700),
+                        style: TextStyle(
+                            fontSize: 30, color: Colors.grey.shade700),
                       ),
                       SizedBox(width: 5),
                       Text(
                         "Weather",
-                        style: TextStyle(fontSize: 30, color: Color(0xFFFFD573)),
+                        style:
+                            TextStyle(fontSize: 30, color: Color(0xFFFFD573)),
                       ),
                     ],
                   ),
@@ -63,11 +66,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     margin: EdgeInsets.only(right: 10),
                     child: Row(
                       children: [
-
                         SizedBox(width: 15),
-                        InkWell(child: Icon(Icons.settings),onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(),));
-                        },),
+                        InkWell(
+                          child: Icon(Icons.settings),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SettingScreen(),
+                                ));
+                          },
+                        ),
                       ],
                     ),
                   ),

@@ -27,7 +27,7 @@ class _NewscateogryScreenState extends ConsumerState<NewscateogryScreen> {
       ),
       body: Column(
         children: [
-                    Expanded(
+          Expanded(
             child: ListView(
               children: [
                 RadioListTile<String>(
